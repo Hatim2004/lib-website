@@ -3,6 +3,7 @@ import EmpTable from '../components/Table';
 import { useState, useEffect } from "react";
 import FormDialog from '../components/Form';
 import { Box } from '@mui/material';
+import DeleteForm from '../components/DeleteForm';
 
 
 export default function Home() {
@@ -29,9 +30,8 @@ export default function Home() {
             <EmpTable rows={rows} />
             <Box sx={{width:'100%', mt:'3vh', textAlign:'center'}}>
                 <FormDialog  />
+                <DeleteForm />
             </Box>
-            
-
         </main>
     )
 }

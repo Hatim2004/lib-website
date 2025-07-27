@@ -57,3 +57,20 @@ body{
 .textField .MuiInputBase-input {
   text-align: right;
 }
+
+/* sx={{ height: 400, width: '75vh', mr: 'auto', ml: 'auto', mt: '3vh', direction:'ltr' }} */
+.empTable{
+  height: 50vh;
+  width: 75vh;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 3vh;
+  direction: ltr;
+}
+
+
+@media (max-width:375px){
+  .empTable{
+    width: 50vh;
+  }
+}
