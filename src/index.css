@@ -1,76 +1,116 @@
-*{
+/* Reset default margins and paddings */
+* {
   padding: 0;
   margin: 0;
 }
 
-body{
-  font-family: 'Roboto';
+body {
   direction: rtl;
+  max-width: 100%;
+  overflow-x: hidden;
 }
-.card{
+
+.categories{
+  padding-right: 4vh;
+}
+
+/* ===== Card Styling ===== */
+.card {
   width: 50vh;
-  height: inherit;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10vh;
+  margin: 10vh auto 0;
+  padding: 1em;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 10px !important;
-  box-shadow:0px 0px 8px 0 rgba(0, 0, 0, 0.1), 0 0px 0px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
-.singUp{
-  margin-top: 1.2em ;
-  text-align: center;
-}
-
-.cardTitle{
-  margin-top: 5vh;
-  margin-bottom: 3vh;
+/* Title and signup spacing */
+.cardTitle {
+  margin: 5vh 0 3vh;
   font-weight: 400;
 }
 
-
-.textField {
-  margin-top: 30px;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+.singUp {
+  margin-top: 1.2em;
+  text-align: center;
 }
 
-.textField .MuiInputBase-root {
+/* ===== Input Field ===== */
+.textField,
+.Search-Bar {
+  width: 80%;
+  margin: 30px auto 0;
   direction: rtl;
 }
 
-.textField .MuiInputLabel-root {
+.textField .MuiInputLabel-root,
+.Search-Bar .MuiInputLabel-root {
   right: 20px;
   left: auto;
   transform-origin: top right;
 }
 
-.textField .MuiInputLabel-shrink {
+.Search-Bar .MuiInputLabel-root {
+  right: 45px;
+}
+
+.textField .MuiInputLabel-shrink,
+.Search-Bar .MuiInputLabel-shrink {
   transform: translate(-14px, -9px) scale(0.75);
 }
 
-.textField .MuiInputBase-input {
+.Search-Bar .MuiInputLabel-shrink {
+  transform: translate(-20px, 0) scale(0.75);
+}
+
+.textField .MuiInputBase-input,
+.Search-Bar .MuiInputBase-input {
   text-align: right;
 }
 
-/* sx={{ height: 400, width: '75vh', mr: 'auto', ml: 'auto', mt: '3vh', direction:'ltr' }} */
-.empTable{
+/* Search-Bar container */
+.Search-Bar {
+  background-color: azure;
+  border-radius: 2rem;
+  height: 6.3vh;
+}
+
+/* ===== Employee Table ===== */
+.empTable {
   height: 50vh;
   width: 75vh;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 3vh;
+  margin: 3vh auto 0;
   direction: ltr;
 }
 
-
-@media (max-width:375px){
-  .empTable{
+/* ===== Responsive Design ===== */
+@media (max-width: 430px) {
+  .empTable {
     width: 50vh;
+  }
+
+  .SearchBar {
+    width: 90% !important;
+  }
+
+  .HeadName {
+    font-size: 6vh !important;
+    margin-inline: auto;
+  }
+
+  .NameDec {
+    font-size: 3vh !important;
+  }
+
+  .headBox,
+  .mainBox {
+    width: 100% !important;
+  }
+
+  .mainBox {
+    width: 92% !important;
   }
 }

@@ -8,10 +8,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import BadgeIcon from '@mui/icons-material/Badge';
 import HomeIcon from '@mui/icons-material/Home';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function RightDrawer() {
     const navigate = useNavigate();
@@ -34,11 +34,21 @@ export default function RightDrawer() {
                 </ListItem>
 
                 <ListItem>
-                    <ListItemButton  onClick={()=>{navigate('/Employees')}}>
+                    <ListItemButton  onClick={()=>{navigate('/basket')}}>
                         <ListItemIcon>
-                            <BadgeIcon />
+                            <ShoppingCartIcon />
                         </ListItemIcon>
-                        <ListItemText primary={"الموظفين"} />
+                        <ListItemText primary={"السلة"} />
+                    </ListItemButton>
+                </ListItem>
+
+
+                <ListItem>
+                    <ListItemButton  onClick={()=>{navigate('/favorites')}}>
+                        <ListItemIcon>
+                            <FavoriteIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={"الكتب المفضلة"} />
                     </ListItemButton>
                 </ListItem>
             </List>

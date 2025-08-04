@@ -16,7 +16,7 @@ export default function SingUp() {
   async function handleSubmit() {
     if (user && pwd) {
       try {
-        const response = await fetch('http://localhost:3470/users/registrar', {
+        const response = await fetch('https://api-05ii.onrender.com/users/registrar', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: user, password: pwd }),
