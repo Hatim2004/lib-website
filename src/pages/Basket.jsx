@@ -30,7 +30,9 @@ export default function LoanedBooks() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`https://api-05ii.onrender.com/loans/delete/${id}`);
-      fetchLoans(); // refresh list after deletion
+      fetchLoans();
+      window.location.reload();
+
     } catch (err) {
       console.error('Error deleting book:', err);
     }

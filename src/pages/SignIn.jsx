@@ -1,21 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box,
-  Button,
-  TextField,
-  Link,
-  IconButton,
-  InputAdornment,
-  FormControl,
-  InputLabel,
-  FilledInput
+    Box,
+    Button,
+    TextField,
+    Link,
+    IconButton,
+    InputAdornment,
+    FormControl,
+    InputLabel,
+    FilledInput
 } from '@mui/material';
 import {
-  Visibility,
-  VisibilityOff
+    Visibility,
+    VisibilityOff
 } from '@mui/icons-material';
 
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 
 export default function SignIn() {
     const [FieldState, setFieldState] = useState(false);
@@ -23,7 +25,10 @@ export default function SignIn() {
     const navigate = useNavigate();
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
+    const [newUser, setNewUser] = useState(false);
 
+
+    
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
@@ -33,6 +38,14 @@ export default function SignIn() {
     const handleMouseUpPassword = (event) => {
         event.preventDefault();
     };
+
+    function Greeting({ newUser }) {
+        return newUser ? <Alert className='alert' icon={<CheckIcon fontSize="inherit" />} sx={{ width: '73.2%', ml: 'auto', mr: 'auto', mb: '1em' }} severity="success">
+            تم إنشاء حساب جديد بنجاح
+        </Alert> : null
+    }
+
+
 
     async function handleSubmit() {
         if (user && pwd) {
@@ -50,7 +63,10 @@ export default function SignIn() {
                 }
 
                 // Successful login - navigate to home
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userName', user);
                 navigate('/Home');
+
 
             } catch (error) {
                 console.error('Login failed:', error.message);
@@ -91,8 +107,8 @@ export default function SignIn() {
                     label="اسم المستخدم"
                     variant="filled"
                     autoComplete='off'
-                    onChange={(e) => {
-                        setUser(e.target.value);
+                    onChange={(eo) => {
+                        setUser(eo.target.value);
                     }}
                 />
 
@@ -100,7 +116,7 @@ export default function SignIn() {
                 {/* Password Feild */}
                 <FormControl
                     className='textField'
-                    sx={{ width: '80%', ml: 'auto', mr: 'auto', mb: '2em', mt: '2em' }}
+                    sx={{ width: '80%', ml: 'auto', mr: 'auto', mb: '1em', mt: '2em' }}
                     error={FieldState}
                 >
                     <InputLabel htmlFor="password">كلمة المرور</InputLabel>
@@ -126,6 +142,8 @@ export default function SignIn() {
                         }
                     />
                 </FormControl>
+
+                <Greeting newUser={localStorage.getItem('newUser') === 'true'} />
 
                 {/* Sign in button */}
                 <Button sx={{ width: '80%', ml: 'auto', mr: 'auto', mb: '2em', height: '3em' }} variant='contained'

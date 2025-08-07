@@ -105,12 +105,30 @@ body {
     font-size: 3vh !important;
   }
 
-  .headBox,
-  .mainBox {
+  .headBox{
     width: 100% !important;
   }
 
   .mainBox {
     width: 92% !important;
+  }
+
+  .card {
+    width: 85%;
+    padding: 0px;
+    
+  }
+
+  .alert{
+    margin-top: 0em;
+    width: 70% !important;
+  }
+
+  .cardTitle {
+    font-size: 1.5rem;
+  }
+
+  .singUp {
+    font-size: 0.9rem;
   }
 }

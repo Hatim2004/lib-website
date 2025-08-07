@@ -10,6 +10,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { IconButton, Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import CheckIcon from '@mui/icons-material/Check';
+import { lightBlue } from '@mui/material/colors';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 export default function BookCard({ name, description, image, label, book, price, onUnfavorite }) {
   const title = label || name || (book && (book.label || book.bookTitle));
@@ -17,6 +21,9 @@ export default function BookCard({ name, description, image, label, book, price,
   const desc = description || (book && book.description);
   const price1 = price || (book && book.price);
   const [liked, setLiked] = useState(false);
+  const { fetchBasketCount, fetchFavoritesCount } = useOutletContext();
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     const isLiked = localStorage.getItem(`liked-${title}`);
@@ -36,9 +43,13 @@ export default function BookCard({ name, description, image, label, book, price,
           description: desc,
           price: price1,
         });
+        fetchFavoritesCount();
       } else {
         await axios.delete(`https://api-05ii.onrender.com/favorites/delete-by-title/${encodeURIComponent(title)}`);
+        fetchFavoritesCount();
         if (onUnfavorite) onUnfavorite(); // notify parent to refresh
+        window.location.reload();
+
       }
     } catch (err) {
       console.error('Error toggling favorite:', err);
@@ -47,27 +58,33 @@ export default function BookCard({ name, description, image, label, book, price,
 
   const handleAddToLoan = async () => {
     try {
+      setLoading(true);
       await axios.post('https://api-05ii.onrender.com/loans/add', {
         bookTitle: title,
         image: img,
         description: desc,
         price: price1,
-      });
+      }
+      );
+      fetchBasketCount();
 
-      await axios.delete(`https://api-05ii.onrender.com/favorites/delete-by-title/${encodeURIComponent(title)}`);
-      localStorage.setItem(`liked-${title}`, 'false');
       setLiked(false);
-
-      if (onUnfavorite) onUnfavorite(); // notify parent to refresh favorites list
-
-      alert(`تمت إضافة "${title}" إلى السلة وتمت إزالته من المفضلة.`);
-    } catch (error) {
-      console.error(error);
+      if (onUnfavorite) {
+        await axios.delete(`https://api-05ii.onrender.com/favorites/delete-by-title/${encodeURIComponent(title)}`);
+        fetchFavoritesCount();
+        localStorage.setItem(`liked-${title}`, 'false');
+        onUnfavorite();
+      }
+    }
+    catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Card
+    <Card 
       sx={{
         maxWidth: 320,
         borderRadius: 4,
@@ -86,6 +103,7 @@ export default function BookCard({ name, description, image, label, book, price,
           image={img}
           alt={title}
           sx={{
+            pt:'1em',
             height: 220,
             width: '100%',
             objectFit: 'contain',
@@ -138,15 +156,39 @@ export default function BookCard({ name, description, image, label, book, price,
 
       <CardActions sx={{ p: 2, pt: 0 }}>
         <Button
-          variant="contained"
-          color="primary"
-          fullWidth
           onClick={handleAddToLoan}
-          sx={{ borderRadius: 2, py: 1 }}
+          disabled={loading}
+          fullWidth
+          sx={{
+            textTransform: 'none',
+            fontWeight: 500,
+            fontSize: '1.1em',
+            backgroundColor: loading ? '#4caf50' :  lightBlue[600],
+            color: 'white',
+            py: 1.2,
+            px: 2,
+            transition: '0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1,
+          }}
         >
-          إضافة للسلة
+          {loading ? (
+            <>
+              <CheckIcon sx={{ fontSize: 22 }} />
+              تمت الإضافة
+            </>
+          ) : (
+            <>
+              <AddShoppingCartIcon sx={{ fontSize: 22 }} />
+              إضافة للسلة
+            </>
+          )}
         </Button>
+
       </CardActions>
+
     </Card>
   );
 }

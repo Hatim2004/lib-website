@@ -3,18 +3,20 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
-
+import { CircularProgress } from '@mui/material';
 import { useState } from "react"
 
 export default function SingUp() {
   const [FieldState, setFieldState] = useState(false);
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
   async function handleSubmit() {
     if (user && pwd) {
+      setLoading(true);
       try {
         const response = await fetch('https://api-05ii.onrender.com/users/registrar', {
           method: 'POST',
@@ -27,12 +29,15 @@ export default function SingUp() {
         }
 
         // Handle successful response
-        navigate("/")
+        localStorage.setItem('newUser', 'true');
+        navigate("/");
 
       } catch (error) {
         console.error('Request failed:', error);
         // Show user-friendly error message
         setFieldState(true);
+      } finally {
+        setLoading(false);
       }
     }
   }
@@ -109,7 +114,7 @@ export default function SingUp() {
         {/* Confirme Password Feild */}
         <TextField
           type='password'
-         sx={{
+          sx={{
             mb: '30px', width: '80%', ml: 'auto', mr: 'auto'
             , '& .MuiInputBase-root': {
               direction: 'rtl',
@@ -134,12 +139,16 @@ export default function SingUp() {
 
 
         {/* Sign in button */}
-        <Button sx={{ width: '80%', height: '3em', mb: '3em', ml: 'auto', mr: 'auto', fontWeight: '900' }} variant='contained'
-          onClick={() => {
-            handleSubmit()
-          }}>إنشاء حساب</Button>
+        <Button
+          sx={{ width: '80%', height: '3em', mb: '3em', ml: 'auto', mr: 'auto' }}
+          variant='contained'
+          onClick={handleSubmit}
+          disabled={loading} // disable while loading
+        >
+          {loading ? <CircularProgress size={24} color="inherit" /> : 'إنشاء حساب'}
+        </Button>
 
-        {/* Rempare me*/}
+
 
       </Box>
       <p className='singUp'>هل لديك حساب بالفعل؟ <Link href='/'>تسجيل الدخول</Link></p>

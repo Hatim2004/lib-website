@@ -17,6 +17,7 @@ export default function Home() {
     const [PhilosophyBooks] = useState(philosophyBooks)
     //Philosophy books
     const [ReferenceBooks] = useState(referenceBooks)
+
     return (
         <>
             <Box className='headBox' sx={{ bgcolor: theme.palette.primary.main, height: '50vh' }}>
@@ -32,7 +33,7 @@ export default function Home() {
                     className='NameDec'
                     sx={{ textAlign: 'center', pt: '4vh' }}
                 >
-                    المكتبة الالكترونية لاستعارة الكتب
+                    المكتبة الالكترونية لشراء الكتب
                 </Typography>
                 <SearchBar />
             </Box>

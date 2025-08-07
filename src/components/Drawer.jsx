@@ -63,7 +63,7 @@ export default function RightDrawer() {
                 edge="start"
                 color="inherit"
                 aria-label="menu"
-                sx={{ mr: 2 }}
+                sx={{ mr: 0.2 }}
                 onClick={toggleDrawer(true)}
             >
                 <MenuIcon />

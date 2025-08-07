@@ -3,10 +3,13 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { islamicBooks } from '../data/IslamicBooks';
 import { philosophyBooks } from '../data/PhilosophyBooks';
 import { referenceBooks } from '../data/ReferenceBooks';
+import { useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 
 export default function SearchBar() {
   const allBooks = [...islamicBooks, ...philosophyBooks, ...referenceBooks];
+  const { fetchBasketCount } = useOutletContext();
+
 
   const handleAddToLoan = async (book) => {
 
@@ -19,6 +22,7 @@ export default function SearchBar() {
         description: book.description,
         price: book.price,
       });
+      fetchBasketCount();
       alert(`تم اضافة "${book.label}" للسلة`);
     } catch (error) {
       console.error(error);

@@ -7,8 +7,7 @@ import Registrar from "./pages/Registrar"
 import { ThemeProvider } from '@mui/material/styles';
 import theme from "./PageTheme";
 import FavoritesPage from './pages/FavoritesPage';
-
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,9 +16,9 @@ const router = createBrowserRouter(
       <Route index element={<SignIn />} />
       <Route path="registrar" element={<Registrar />} />
       <Route path="/" element={<Root />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/basket" element={<Basket />} />
-        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/home" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
+        <Route path="/basket" element={<ProtectedRoute> <Basket /> </ProtectedRoute>} />
+        <Route path="/favorites" element={<ProtectedRoute> <FavoritesPage /> </ProtectedRoute>} />
       </Route>
     </Route>
 
@@ -28,10 +27,12 @@ const router = createBrowserRouter(
 
 
 export default function MyApp() {
+  
+
   return (
     <>
       <ThemeProvider theme={theme}>
-              <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </ThemeProvider>
 
     </>

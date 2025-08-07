@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Typography, Grid, Container } from '@mui/material';
 import BookCard from '../components/BookCard';
+import { useOutletContext } from 'react-router-dom';
 
 export default function Favorites() {
+  const { fetchBasketCount, fetchFavoritesCount } = useOutletContext();
   const [favorites, setFavorites] = useState([]);
 
   const fetchFavorites = () => {
